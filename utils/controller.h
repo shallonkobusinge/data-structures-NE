@@ -7,9 +7,7 @@ class App {
 public:
 
     static void addLocation(string name) {
-//        string name;
-//        cout << "Enter location name: "<<endl;
-//        cin >> name;
+
         for_each(name.begin(), name.end(), [](char &c) {
             c = toupper(c);
         });
@@ -18,21 +16,14 @@ public:
     }
 
     static void addDisease(string locationName, string name, int numberOfCases) {
-//        string name;
-//        cout << "Enter disease name: "<<endl;
-//        cin >> name;
+
         for_each(name.begin(), name.end(), [](char &c) {
             c = toupper(c);
         });
-//        string locationName;
-//        cout << "Enter location name: "<<endl;
-//        cin >> locationName;
+
         for_each(locationName.begin(), locationName.end(), [](char &c) {
             c = toupper(c);
         });
-//        int numberOfCases;
-//        cout << "Enter number of cases: "<<endl;
-//        cin >> numberOfCases;
         Location location = MinistryService::findLocationByName(locationName);
         Disease disease = Disease(name, location.getId(), numberOfCases);
         MinistryService::recordAdiseaseAndItsCase(disease);
@@ -76,7 +67,7 @@ public:
         }
     }
 
-    static vector<string> tokenizestring(string str, const char delim) {
+    static vector<string> splitString(string str, const char delim) {
         vector<string> out;
         // split the string into an array of strings
         stringstream ss(str);
@@ -89,13 +80,6 @@ public:
     }
         return out;
 
-        //            char *ptr;
-//            ptr = strtok(option, " ");
-//            while(ptr != NULL){
-//                cout<<ptr<<endl;
-//                tokens.push_back(string(ptr));
-//                ptr = strtok(NULL, " ");
-//            }
     }
     static void start(){
         string option;
@@ -118,21 +102,10 @@ public:
             cout<<"cases <disease>                                   : Find total cases of a given disease            "<<endl;
             cout<<"help (click 9 for help)                           : Prints user manual                             "<<endl;
             cout<<"Exit                                             : Exit the program                               "<<endl;
-//            cin.getline(str,100);
+
             getline(cin,option);
-
-//            char *ptr;
-//            ptr = strtok(option, " ");
-//            while(ptr != NULL){
-//                cout<<ptr<<endl;
-//                tokens.push_back(string(ptr));
-//                ptr = strtok(NULL, " ");
-//            }
-
-            tokens= tokenizestring(option, ' ');
+            tokens= splitString(option, ' ');
             cout<<tokens[0]<<endl;
-
-
             if(tokens[0] == "add"){
                 addLocation(tokens[1]);
             } else if(tokens[0] == "delete"){

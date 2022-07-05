@@ -6,9 +6,6 @@ class MinistryService{
 
 public:
     static bool compare(string a, string b){
-        //returns 1 if string a is alphabetically
-        //less than string b
-        //quite similar to strcmp operation
         return a<b;
     }
 
@@ -94,8 +91,6 @@ public:
         cout<<"\t\t  NAMES"<<endl;
         cout<<"----------------------------------------------"<<endl;
         for(auto & disease : diseases) {
-//            Disease disease = returnSingleDisease(diseases[i]);
-//            Location location = findLocationById(disease.getLocationId());
             cout << " \t\t " << disease << endl;
         }
         cout<<endl<<endl;
@@ -300,13 +295,6 @@ public:
             cout<<endl;
             exit(0);
         }
-//        bool diseaseExists = checkIfADiseaseExistsByName(disease.getName());
-//        if(diseaseExists){
-//            cout<<endl;
-//            cout << "\t Disease you are trying to add already exists" << endl;
-//            cout<<endl;
-//            exit(0);
-//        }
         if(disease.getNumberOfCases() <= 0){
             cout<<endl;
             cout << "\t Number of cases should be greater than 0" << endl;
@@ -433,13 +421,6 @@ public:
         return disease;
     }
     static void numberOfCasesFoundInALocation(string locationName, string diseaseName){
-//        string locationName,diseaseName;
-//        cout<<endl;
-//        cout<<" \t\t ENTER LOCATION NAME  "<<endl;
-//        cin >> locationName;
-//        cout<<" \t\t ENTER DISEASE NAME  "<<endl;
-//        cin >> diseaseName;
-
         for_each(locationName.begin(), locationName.end(), [](char &c){
             c = toupper(c);
         });
