@@ -63,9 +63,10 @@ public:
         cout<<endl<<endl;
         cout<<"  \t\t\t LIST OF ALL EXISTING LOCATIONS  \t\t\t"<<endl;
        for(int i=0; i<locations.size(); i++) {
-           cout << "\t\t " << i + 1 << " \t\t " << locations[i] << endl;
-           cout << endl << endl;
+           cout << " \t\t " << locations[i] << endl;
+
        }
+        cout << endl << endl;
     }
     static void alphabeticallySortDiseases(){
         vector<string> diseases = returnAllDiseaseNames();
@@ -121,14 +122,17 @@ public:
         file.open("locations.txt", ios::app);
         bool locationExists = locationExistsByName(location.getName());
         if (locationExists) {
-            cout << "Location already exists" << endl;
+            cout<<endl;
+            cout << "\t\t Location already exists" << endl;
             cout<<endl;
             exit(0);
         }
         int lastId = returnLastId();
         location.setId(lastId + 1);
         file << location.getId() << "  " << location.getName() << "  " << endl;
-        cout << "Location "<<location.getName()<<" added successfully" << endl;
+        cout<<endl;
+        cout << "\t\t\t Location "<<location.getName()<<" is successfully added!" << endl;
+        cout<<endl;
         file.close();
     }
     static bool locationExistsByName(string location){
@@ -398,13 +402,13 @@ public:
         }
         return disease;
     }
-    static void numberOfCasesFoundInALocation(){
-        string locationName,diseaseName;
-        cout<<endl;
-        cout<<" \t\t ENTER LOCATION NAME  "<<endl;
-        cin >> locationName;
-        cout<<" \t\t ENTER DISEASE NAME  "<<endl;
-        cin >> diseaseName;
+    static void numberOfCasesFoundInALocation(string locationName, string diseaseName){
+//        string locationName,diseaseName;
+//        cout<<endl;
+//        cout<<" \t\t ENTER LOCATION NAME  "<<endl;
+//        cin >> locationName;
+//        cout<<" \t\t ENTER DISEASE NAME  "<<endl;
+//        cin >> diseaseName;
 
         for_each(locationName.begin(), locationName.end(), [](char &c){
             c = toupper(c);
@@ -424,6 +428,7 @@ public:
         if(!diseaseExists){
             cout<<endl;
             cout << "\t\t Disease you are trying to find with does not exist" << endl;
+            cout<<"ahhaha "<<diseaseName<<endl;
             cout<<endl;
             exit(0);
         }
@@ -441,11 +446,11 @@ public:
         cout<<endl;
 
     }
-    static void totalNumberOfCaseOfAgivenDisease(){
-        string diseaseName;
-        cout<<endl;
-        cout<<" \t\t ENTER DISEASE NAME  "<<endl;
-        cin >> diseaseName;
+    static void totalNumberOfCaseOfAgivenDisease(string diseaseName){
+//        string diseaseName;
+//        cout<<endl;
+//        cout<<" \t\t ENTER DISEASE NAME  "<<endl;
+//        cin >> diseaseName;
         for_each(diseaseName.begin(), diseaseName.end(), [](char &c){
             c = toupper(c);
         });
@@ -487,7 +492,7 @@ public:
         cout<<"Step 9: Type "<<"{ cases }"<<"  To Find cases of a disease in location                                                                                                                   "<<endl;
         cout<<"Step 10: Type "<<"{ total }"<<" To Find total cases of a given disease                                                                                                                    "<<endl;
         cout<<"Step 11: Type "<<"{ help }"<<" To Print user manual                                                                                                                                       "<<endl;
-        cout<<"Step 12: Type "<<"{ exit }"<<" To Exit the application                                                                                                                                    "<<endl;
+        cout<<"Step 12: Type "<<"{ Exit }"<<" To Exit the application                                                                                                                                    "<<endl;
 
     }
 

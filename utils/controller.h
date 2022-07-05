@@ -69,6 +69,8 @@ public:
     }
     static void start(){
         string option;
+        char str[100];
+        vector<string> tokens;
 
 
         do{
@@ -76,36 +78,61 @@ public:
             cout<<"======================================================================================================"<<endl;
             cout<<"*                                         HELP MENU                                                  *"<<endl;
             cout<<"======================================================================================================"<<endl;
-            cout<<"1. add <Location>                                    : Add a new location                             "<<endl;
-            cout<<"2. delete <Location>                                 : Delete an existing location                    "<<endl;
-            cout<<"3. record <Location><disease> <cases>                : Delete an existing location                    "<<endl;
-            cout<<"4. list locations                                    : List all existing locations                    "<<endl;
-            cout<<"5. list diseases                                     : List existing Diseases in a locations          "<<endl;
-            cout<<"6. where <disease>                                   : Find where disease exists                      "<<endl;
-            cout<<"7. cases <location><disease>                         : Find cases of a disease in location            "<<endl;
-            cout<<"8. cases <disease>                                   : Find total cases of a given disease            "<<endl;
-            cout<<"9. help (click 9 for help)                           : Prints user manual                             "<<endl;
-            cout<<"10. Exit                                             : Exit the program                               "<<endl;
-            cin>>option;
-            if(option == "add"){
+            cout<<"add <Location>                                    : Add a new location                             "<<endl;
+            cout<<"delete <Location>                                 : Delete an existing location                    "<<endl;
+            cout<<"record <Location><disease> <cases>                : Delete an existing location                    "<<endl;
+            cout<<"list locations                                    : List all existing locations                    "<<endl;
+            cout<<"list diseases                                     : List existing Diseases in a locations          "<<endl;
+            cout<<"where <disease>                                   : Find where disease exists                      "<<endl;
+            cout<<"cases <location><disease>                         : Find cases of a disease in location            "<<endl;
+            cout<<"cases <disease>                                   : Find total cases of a given disease            "<<endl;
+            cout<<"help (click 9 for help)                           : Prints user manual                             "<<endl;
+            cout<<"Exit                                             : Exit the program                               "<<endl;
+            cin.getline(str,100);
+            char *ptr;
+            ptr = strtok(str, " ");
+            while(ptr != NULL){
+                tokens.push_back(ptr);
+                ptr = strtok(NULL, " ");
+            }
+            for (int i = 0; i < tokens.size(); ++i) {
+                cout<<tokens[i]<<endl;
+            }
+            cout<<"size "<<tokens.size()<<endl;
+            if(tokens[0] == "add"){
                 addLocation();
-            } else if(option == "delete"){
+            } else if(tokens[0] == "delete"){
                 MinistryService::deleteAnExistingLocation();
-            }else if(option == "record") {
+            }else if(tokens[0] == "record") {
                 addDisease();
-            }else if(option == "list"){
+            }else if((tokens[0] == "list") && (tokens[1].empty())){
                 MinistryService::alphabeticallySortLocations();
-            }else if(option == "where"){
+            }else if(tokens[0] == "where"){
                 MinistryService::alphabeticallySortDiseases();
-            }else if(option == "wheresecond"){
+            }else if((tokens[0] == "list"  ) && !(tokens[1].empty())){
                 MinistryService::getLocationByDiseaseName();
-            }else if(option == "cases"){
-                MinistryService::numberOfCasesFoundInALocation();
-            }else if(option == "total"){
-                MinistryService::totalNumberOfCaseOfAgivenDisease();
-            }else if(option == "help"){
+            }
+            else if(tokens.size() == 2 && tokens[0] == "cases" ){
+                std::string s;
+                std::stringstream ss;
+                ss << tokens[1];
+                ss >> s;
+                MinistryService::totalNumberOfCaseOfAgivenDisease(s);
+            }
+            else if( tokens.size() == 3 && tokens[0] == "cases" ){
+                std::string s;
+                std::stringstream ss;
+                ss << tokens[2];
+                ss >> s;
+
+                std::string id;
+                std::stringstream ssid;
+                ssid << tokens[1];
+                ssid >> id;
+                MinistryService::numberOfCasesFoundInALocation(id, s);
+            }else if(tokens[0] == "help"){
                 MinistryService::userManual();
-            }else if(option == "exit"){
+            }else if(tokens[0] == "Exit"){
                 cout<<"\t\t Ministry of Health (MoH) management system has terminated successfully "<<endl;
                     exit(1);
             }else{
@@ -113,7 +140,7 @@ public:
             cout << endl;
             cout << " \t\t\t INVALID INPUT " << endl;
             cout << endl;
-        }}while(option != "exit");
+        }}while(tokens[0] != "Exit");
 
     }
 };
