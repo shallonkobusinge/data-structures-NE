@@ -3,69 +3,99 @@
 //
 #include "services.h"
 
-class App{
+class App {
 public:
 
-    static void addLocation(){
-        string name;
-        cout << "Enter location name: "<<endl;
-        cin >> name;
-        for_each(name.begin(), name.end(), [](char &c){
+    static void addLocation(string name) {
+//        string name;
+//        cout << "Enter location name: "<<endl;
+//        cin >> name;
+        for_each(name.begin(), name.end(), [](char &c) {
             c = toupper(c);
         });
         Location location = Location(name);
         MinistryService::AddLocation(location);
     }
-    static void addDisease(){
-        string name;
-        cout << "Enter disease name: "<<endl;
-        cin >> name;
-        for_each(name.begin(), name.end(), [](char &c){
+
+    static void addDisease(string locationName, string name, int numberOfCases) {
+//        string name;
+//        cout << "Enter disease name: "<<endl;
+//        cin >> name;
+        for_each(name.begin(), name.end(), [](char &c) {
             c = toupper(c);
         });
-        string locationName;
-        cout << "Enter location name: "<<endl;
-        cin >> locationName;
-        for_each(locationName.begin(), locationName.end(), [](char &c){
+//        string locationName;
+//        cout << "Enter location name: "<<endl;
+//        cin >> locationName;
+        for_each(locationName.begin(), locationName.end(), [](char &c) {
             c = toupper(c);
         });
-        int numberOfCases;
-        cout << "Enter number of cases: "<<endl;
-        cin >> numberOfCases;
+//        int numberOfCases;
+//        cout << "Enter number of cases: "<<endl;
+//        cin >> numberOfCases;
         Location location = MinistryService::findLocationByName(locationName);
-        Disease disease = Disease(name,location.getId(),numberOfCases);
+        Disease disease = Disease(name, location.getId(), numberOfCases);
         MinistryService::recordAdiseaseAndItsCase(disease);
     }
 
-    static void showAllLocations(){
+    static void showAllLocations() {
         vector<Location> locations = MinistryService::returnAllLocations();
 
-        cout<<endl<<endl;
-        cout<<"  \t\t\t LIST OF ALL EXISTING LOCATIONS  \t\t\t"<<endl;
-        for(auto & i : locations){
-            cout <<"\t\t "<< i.getId() << " \t\t " << i.getName() << endl;
+        cout << endl << endl;
+        cout << "  \t\t\t LIST OF ALL EXISTING LOCATIONS  \t\t\t" << endl;
+        for (auto &i: locations) {
+            cout << "\t\t " << i.getId() << " \t\t " << i.getName() << endl;
         }
-        cout<<endl<<endl;
+        cout << endl << endl;
     }
-    static void showAllDisease(){
+
+    static void showAllDisease() {
         vector<Disease> diseases = MinistryService::returnAllDiseases();
-        cout<<endl<<endl;
-        cout<<"  \t\t\t LIST OF ALL EXISTING DISEASES  \t\t\t"<<endl;
-        cout<<"\t\t DISEASE ID \t\t  NAME\t\tLOCATION ID\t\tLOCATION NAME\t\tNUMBER OF CASES  "<<endl;
-        for(auto & i : diseases){
+        cout << endl << endl;
+        cout << "  \t\t\t LIST OF ALL EXISTING DISEASES  \t\t\t" << endl;
+        cout << "\t\t DISEASE ID \t\t  NAME\t\tLOCATION ID\t\tLOCATION NAME\t\tNUMBER OF CASES  " << endl;
+        for (auto &i: diseases) {
             Location location = MinistryService::findLocationById(i.getLocationId());
-            cout <<"\t\t "<< i.getId() <<" \t\t  " << i.getName() <<" \t\t         "<<i.getLocationId() <<" \t\t         "<<location.getName() << " \t\t"<<i.getNumberOfCases() << endl;
+            cout << "\t\t " << i.getId() << " \t\t  " << i.getName() << " \t\t         " << i.getLocationId()
+                 << " \t\t         " << location.getName() << " \t\t" << i.getNumberOfCases() << endl;
 
         }
-        cout<<endl<<endl;
+        cout << endl << endl;
     }
-    static unsigned get_case_string(char* str, char** _strings, unsigned n){
-        while(n)
-        {
-            n--;
-            if(strcmp(str, _strings[n]) == 0) return n;
+
+    static void displayWhereDiseases(string name) {
+        vector<Disease> diseases = MinistryService::displayLocationsOfAgiveDisease(name);
+        cout << endl << endl;
+        cout << "  \t\t\t LIST OF LOCATIONS WHERE DISEASES OCCUR  \t\t\t" << endl;
+        cout << "\t\t DISEASE ID \t\t  NAME\t\tLOCATION ID\t\tLOCATION NAME\t\tNUMBER OF CASES  " << endl;
+        for (auto &i: diseases) {
+            Location location = MinistryService::findLocationById(i.getLocationId());
+            cout << "\t\t " << i.getId() << " \t\t  " << i.getName() << " \t\t         " << i.getLocationId()
+                 << " \t\t         " << location.getName() << " \t\t" << i.getNumberOfCases() << endl;
+
         }
-        return 0;
+    }
+
+    static vector<string> tokenizestring(string str, const char delim) {
+        vector<string> out;
+        // split the string into an array of strings
+        stringstream ss(str);
+        string token;
+        while (ss >> token){
+
+            if(ss.peek() == delim)
+                ss.ignore();
+            out.push_back(token);
+    }
+        return out;
+
+        //            char *ptr;
+//            ptr = strtok(option, " ");
+//            while(ptr != NULL){
+//                cout<<ptr<<endl;
+//                tokens.push_back(string(ptr));
+//                ptr = strtok(NULL, " ");
+//            }
     }
     static void start(){
         string option;
@@ -88,29 +118,42 @@ public:
             cout<<"cases <disease>                                   : Find total cases of a given disease            "<<endl;
             cout<<"help (click 9 for help)                           : Prints user manual                             "<<endl;
             cout<<"Exit                                             : Exit the program                               "<<endl;
-            cin.getline(str,100);
-            char *ptr;
-            ptr = strtok(str, " ");
-            while(ptr != NULL){
-                tokens.push_back(ptr);
-                ptr = strtok(NULL, " ");
-            }
-            for (int i = 0; i < tokens.size(); ++i) {
-                cout<<tokens[i]<<endl;
-            }
-            cout<<"size "<<tokens.size()<<endl;
+//            cin.getline(str,100);
+            getline(cin,option);
+
+//            char *ptr;
+//            ptr = strtok(option, " ");
+//            while(ptr != NULL){
+//                cout<<ptr<<endl;
+//                tokens.push_back(string(ptr));
+//                ptr = strtok(NULL, " ");
+//            }
+
+            tokens= tokenizestring(option, ' ');
+            cout<<tokens[0]<<endl;
+
+
             if(tokens[0] == "add"){
-                addLocation();
+                addLocation(tokens[1]);
             } else if(tokens[0] == "delete"){
-                MinistryService::deleteAnExistingLocation();
+                std::string s;
+                std::stringstream ss;
+                ss << tokens[1];
+                ss >> s;
+                MinistryService::deleteAnExistingLocation(s);
             }else if(tokens[0] == "record") {
-                addDisease();
-            }else if((tokens[0] == "list") && (tokens[1].empty())){
+                addDisease(tokens[1],tokens[2],stoi(tokens[3]));
+            }else if((tokens.size() == 2) && (tokens[1] == "locations")){
                 MinistryService::alphabeticallySortLocations();
-            }else if(tokens[0] == "where"){
+            }else if((tokens.size() == 2) && (tokens[1] == "diseases")){
                 MinistryService::alphabeticallySortDiseases();
-            }else if((tokens[0] == "list"  ) && !(tokens[1].empty())){
-                MinistryService::getLocationByDiseaseName();
+            }else if(tokens[0] == "where"){
+
+                std::string s;
+                std::stringstream ss;
+                ss << tokens[1];
+                ss >> s;
+                MinistryService::getLocationByDiseaseName(s);
             }
             else if(tokens.size() == 2 && tokens[0] == "cases" ){
                 std::string s;
@@ -140,7 +183,7 @@ public:
             cout << endl;
             cout << " \t\t\t INVALID INPUT " << endl;
             cout << endl;
-        }}while(tokens[0] != "Exit");
+        }}while(tokens.size() > 3 || tokens[0] != "Exit");
 
     }
 };
