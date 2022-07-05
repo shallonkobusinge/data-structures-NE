@@ -23,14 +23,39 @@ public:
         for_each(name.begin(), name.end(), [](char &c){
             c = toupper(c);
         });
-        int locationId;
-        cout << "Enter location id: "<<endl;
-        cin >> locationId;
+        string locationName;
+        cout << "Enter location name: "<<endl;
+        cin >> locationName;
+        for_each(locationName.begin(), locationName.end(), [](char &c){
+            c = toupper(c);
+        });
         int numberOfCases;
         cout << "Enter number of cases: "<<endl;
         cin >> numberOfCases;
-        Disease disease = Disease(name,locationId,numberOfCases);
+        Location location = MinistryService::findLocationByName(locationName);
+        Disease disease = Disease(name,location.getId(),numberOfCases);
         MinistryService::recordAdiseaseAndItsCase(disease);
+    }
+    static void showAllLocations(){
+        vector<Location> locations = MinistryService::returnAllLocations();
+        cout<<endl<<endl;
+        cout<<"  \t\t\t LIST OF ALL EXISTING LOCATIONS  \t\t\t"<<endl;
+        for(auto & i : locations){
+            cout <<"\t\t "<< i.getId() << " \t\t " << i.getName() << endl;
+        }
+        cout<<endl<<endl;
+    }
+    static void showAllDisease(){
+        vector<Disease> diseases = MinistryService::returnAllDiseases();
+        cout<<endl<<endl;
+        cout<<"  \t\t\t LIST OF ALL EXISTING DISEASES  \t\t\t"<<endl;
+        cout<<"\t\t DISEASE ID \t\t  NAME\t\tLOCATION ID\t\tLOCATION NAME\t\tNUMBER OF CASES  "<<endl;
+        for(auto & i : diseases){
+            Location location = MinistryService::findLocationById(i.getLocationId());
+            cout <<"\t\t "<< i.getId() <<" \t\t  " << i.getName() <<" \t\t         "<<i.getLocationId() <<" \t\t         "<<location.getName() << " \t\t"<<i.getNumberOfCases() << endl;
+
+        }
+        cout<<endl<<endl;
     }
     static void header(){
         cout<<"======================================================================================================"<<endl;
@@ -74,16 +99,16 @@ public:
                     addDisease();
                     break;
                 case '4':
-                    cout<<" Add location "<<endl;
+                    showAllLocations();
                     break;
                 case '5':
-                    cout<<" Add location "<<endl;
+                    showAllDisease();
                     break;
                 case '6':
-                    cout<<" Add location "<<endl;
+                    MinistryService::getLocationByDiseaseName();
                     break;
                 case '7':
-                    cout<<" Add location "<<endl;
+                    MinistryService::numberOfCasesFoundInALocation();
                     break;
                 case '8':
                     cout<<" Add location "<<endl;

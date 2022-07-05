@@ -76,8 +76,9 @@ public:
         for(auto & i : locations){
             if(i.getName() == location){
                 exists = true;
+                return exists;
             }
-            return exists;
+
             }
         return exists;
     }
@@ -214,6 +215,131 @@ public:
        file << addDisease.getId() << "  " << addDisease.getName() << "  " << addDisease.getLocationId() << "  " << addDisease.getNumberOfCases() << endl;
         cout<<"\t\t "<<addDisease.getName()<<" has be added to "<<location.getName()<<" with "<<addDisease.getNumberOfCases()<<" cases successfully "<<endl;
         file.close();
+    }
+    static Location findLocationById(int id){
+        vector<Location> locations = returnAllLocations();
+        Location location;
+        for(auto & i : locations){
+            if(i.getId() == id){
+                location = i;
+                return location;
+            }
+        }
+        return location;
+    }
+    static Location findLocationByName(string name){
+        vector<Location> locations = returnAllLocations();
+        Location location;
+        for(auto & i : locations){
+            if(i.getName() == name){
+                location = i;
+                return location;
+            }
+        }
+        return location;
+    }
+    static Disease findDiseaseByName(string name){
+        vector<Disease> diseases = returnAllDiseases();
+        Disease disease;
+        for(auto & i : diseases){
+            if(i.getName() == name){
+                disease = i;
+                return disease;
+            }
+        }
+        return disease;
+    }
+   static void getLocationByDiseaseName(){
+       string diseaseName;
+       cout<<endl;
+      cout<<" \t\t ENTER DISEASE NAME  "<<endl;
+      cin >> diseaseName;
+       for_each(diseaseName.begin(), diseaseName.end(), [](char &c){
+           c = toupper(c);
+       });
+
+        bool diseaseExists = checkIfADiseaseExistsByName(diseaseName);
+        if(!diseaseExists){
+            cout<<endl;
+            cout << "\t\t Disease you are trying to find with does not exist" << endl;
+            cout<<endl;
+            exit(0);
+        }
+        Disease disease = findDiseaseByName(diseaseName);
+        Location location = findLocationById(disease.getLocationId());
+        string name = location.getName();
+
+       for_each(name.begin(), name.end(), [](char &c){
+           c = tolower(c);
+       });
+       cout<<"\t\t\t ["<<name<<"]"<<endl;
+       cout<<"\t\t "<<diseaseName<<" is found in "<<name<<endl;
+       cout<<endl<<endl;
+    }
+    static Disease getDiseaseByLocationId(int id){
+        vector<Disease> diseases = returnAllDiseases();
+        Disease disease;
+        for(auto & i : diseases){
+            if(i.getLocationId() == id){
+                disease = i;
+                return disease;
+            }
+        }
+        return disease;
+    }
+    static Disease findDiseaseByLocationIdAndName(int locationId, string name){
+        vector<Disease> diseases = returnAllDiseases();
+        Disease disease;
+        for(auto & i : diseases){
+            if(i.getLocationId() == locationId && i.getName() == name){
+                disease = i;
+                return disease;
+            }
+        }
+        return disease;
+    }
+    static void numberOfCasesFoundInALocation(){
+        string locationName,diseaseName;
+        cout<<endl;
+        cout<<" \t\t ENTER LOCATION NAME  "<<endl;
+        cin >> locationName;
+        cout<<" \t\t ENTER DISEASE NAME  "<<endl;
+        cin >> diseaseName;
+
+        for_each(locationName.begin(), locationName.end(), [](char &c){
+            c = toupper(c);
+        });
+        for_each(diseaseName.begin(), diseaseName.end(), [](char &c){
+            c = toupper(c);
+        });
+        bool locationExists = locationExistsByName(locationName);
+        cout<<" check "<<locationExists<<" name "<<locationName<<endl;
+        if(!locationExists){
+            cout<<endl;
+            cout << "\t\t Location you are trying to find with does not exist" << endl;
+            cout<<endl;
+            exit(0);
+        }
+        bool diseaseExists = checkIfADiseaseExistsByName(diseaseName);
+        if(!diseaseExists){
+            cout<<endl;
+            cout << "\t\t Disease you are trying to find with does not exist" << endl;
+            cout<<endl;
+            exit(0);
+        }
+        Location location = findLocationByName(locationName);
+        Disease disease = findDiseaseByLocationIdAndName(location.getId(),diseaseName);
+        if(disease.getNumberOfCases() == 0){
+            cout<<endl;
+            cout << "\t\t There are no cases of "<<diseaseName<<" in "<<locationName<<endl;
+            cout<<endl;
+            exit(0);
+        }
+        cout<<endl;
+        cout<<" \t\t\t Cases of "<<disease.getName()<<" at "<<location.getName()<<" are: "<<disease.getNumberOfCases()<<endl;
+        cout<<endl;
+        cout<<endl;
+
     }
 
 };
