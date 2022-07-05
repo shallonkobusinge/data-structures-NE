@@ -197,13 +197,13 @@ public:
             cout<<endl;
             exit(0);
         }
-        bool diseaseExists = checkIfADiseaseExistsByName(disease.getName());
-        if(diseaseExists){
-            cout<<endl;
-            cout << "\t Disease you are trying to add already exists" << endl;
-            cout<<endl;
-            exit(0);
-        }
+//        bool diseaseExists = checkIfADiseaseExistsByName(disease.getName());
+//        if(diseaseExists){
+//            cout<<endl;
+//            cout << "\t Disease you are trying to add already exists" << endl;
+//            cout<<endl;
+//            exit(0);
+//        }
         if(disease.getNumberOfCases() <= 0){
             cout<<endl;
             cout << "\t Number of cases should be greater than 0" << endl;
@@ -339,6 +339,55 @@ public:
         cout<<" \t\t\t Cases of "<<disease.getName()<<" at "<<location.getName()<<" are: "<<disease.getNumberOfCases()<<endl;
         cout<<endl;
         cout<<endl;
+
+    }
+    static void totalNumberOfCaseOfAgivenDisease(){
+        string diseaseName;
+        cout<<endl;
+        cout<<" \t\t ENTER DISEASE NAME  "<<endl;
+        cin >> diseaseName;
+        for_each(diseaseName.begin(), diseaseName.end(), [](char &c){
+            c = toupper(c);
+        });
+        bool diseaseExists = checkIfADiseaseExistsByName(diseaseName);
+        if(!diseaseExists){
+            cout<<endl;
+            cout << "\t\t Disease you are trying to find with does not exist" << endl;
+            cout<<endl;
+            exit(0);
+        }
+        Disease disease = findDiseaseByName(diseaseName);
+        int totalNumberOfCases = 0;
+        vector<Disease> diseases = returnAllDiseases();
+        for(auto & i : diseases){
+            if(i.getName() == diseaseName){
+                totalNumberOfCases += i.getNumberOfCases();
+            }
+        }
+        cout<<endl;
+        cout<<" \t\t\t Total number of cases of "<<disease.getName()<<" is: "<<totalNumberOfCases<<endl;
+        cout<<endl;
+        cout<<endl;
+    }
+    static void userManual(){
+        cout<<endl;
+        cout<<"======================================================================================================================"<<endl;
+        cout<<"\t\t WELCOME TO THE USER GUIDE OF OUR SYSTEM                                                                                                                        "<<endl;
+        cout<<"======================================================================================================================"<<endl;
+        cout<<endl;
+        cout<<"Follow the steps below to use the system                                                                                                                            "<<endl;
+        cout<<"Step 1:  To get started you have to run the app in your console application                                                                                         "<<endl;
+        cout<<"Step 2:  Run the application to see the welcome page                                                                                                                "<<endl;
+        cout<<"Step 3: Press 1  To add a new location then enter the name of the location                                                                                          "<<endl;
+        cout<<"Step 4: Press 2  To delete an existing location then enter the name of the location you want to delete                                                              "<<endl;
+        cout<<"Step 5: Press 3  To record a disease and it cases where you will enter the name of the disease and number of cases in a given location name                         "<<endl;
+        cout<<"Step 6: Press 4  To List all existing locations                                                                                                                     "<<endl;
+        cout<<"Step 7: Press 5  To List existing Diseases in a locations                                                                                                           "<<endl;
+        cout<<"Step 8: Press 6  To Find where disease exists                                                                                                                       "<<endl;
+        cout<<"Step 9: Press 7  To Find cases of a disease in location                                                                                                             "<<endl;
+        cout<<"Step 10: Press 9 To Find total cases of a given disease                                                                                                             "<<endl;
+        cout<<"Step 11: Press 9 To Find total cases of a given disease                                                                                                             "<<endl;
+        cout<<"Step 12: Press 10 To Exit the application                                                                                                                           "<<endl;
 
     }
 

@@ -57,23 +57,11 @@ public:
         }
         cout<<endl<<endl;
     }
-    static void header(){
-        cout<<"======================================================================================================"<<endl;
-        cout<<"*       Welcome to Disease Cases Reporting System!                                                   *"<<endl;
-        cout<<"======================================================================================================"<<endl;
-        cout<<"*                                                                                                    *"<<endl;
-        cout<<"*        It is developed by Shallon Kobusinge as practical                                           *"<<endl;
-        cout<<"*       evaluation for the end of Year 3                                                             *"<<endl;
-        cout<<"======================================================================================================"<<endl;
-        cout<<"Starting Time: Thu Apr 05 23:59:08 CAT 2022                                                           "<<endl;
-        cout<<"Need a help Type 'help' then press Enter Key.                                                         "<<endl;
 
-
-    }
     static void start(){
-        char option;
+        int option;
         do{
-            header();
+
             cout<<"======================================================================================================"<<endl;
             cout<<"*                        HELP MENU                                                  *"<<endl;
             cout<<"======================================================================================================"<<endl;
@@ -84,47 +72,50 @@ public:
             cout<<"5. list diseases                                     : List existing Diseases in a locations          "<<endl;
             cout<<"6. where <disease>                                   : Find where disease exists                      "<<endl;
             cout<<"7. cases <location><disease>                         : Find cases of a disease in location            "<<endl;
-            cout<<"8. cases <disease>                                   : Find total cases of a give disease             "<<endl;
-            cout<<"9. help                                              : Prints user manual                             "<<endl;
+            cout<<"8. cases <disease>                                   : Find total cases of a given disease            "<<endl;
+            cout<<"9. help (click 9 for help)                           : Prints user manual                             "<<endl;
             cout<<"10. Exit                                             : Exit the program                               "<<endl;
             cin>>option;
             switch (option) {
-                case '1':
+                case 1:
                     addLocation();
                     break;
-                case '2':
+                case 2:
                     MinistryService::deleteAnExistingLocation();
                     break;
-                case '3':
+                case 3:
                     addDisease();
                     break;
-                case '4':
+                case 4:
                     showAllLocations();
                     break;
-                case '5':
+                case 5:
                     showAllDisease();
                     break;
-                case '6':
+                case 6:
                     MinistryService::getLocationByDiseaseName();
                     break;
-                case '7':
+                case 7:
                     MinistryService::numberOfCasesFoundInALocation();
                     break;
-                case '8':
-                    cout<<" Add location "<<endl;
+                case 8:
+                    MinistryService::totalNumberOfCaseOfAgivenDisease();
                     break;
-                case '9':
-                    cout<<" Add location "<<endl;
+                case 9:
+                    MinistryService::userManual();
                     break;
-                case '10':
+                case 10:
+                    cout<<"\t\t Ministry of Health (MoH) management system has terminated successfully "<<endl;
                     exit(1);
                 default:
-                    cout<<" Invalid input "<<endl;
+                    cout<<endl;
+                    cout<<endl;
+                    cout<<" \t\t\t INVALID INPUT "<<endl;
+                    cout<<endl;
                     break;
                                 }
 
-
-        }while(option != '9');
+        }while(option != 10);
 
     }
 };
