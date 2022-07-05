@@ -1,0 +1,3 @@
+C:/Users/B.User/CLionProjects/ministry-app/cmake-build-debug/CMakeFiles/ministry_app.dir
+C:/Users/B.User/CLionProjects/ministry-app/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/B.User/CLionProjects/ministry-app/cmake-build-debug/CMakeFiles/rebuild_cache.dir
