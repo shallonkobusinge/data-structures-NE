@@ -530,14 +530,14 @@ public:
         cout<<"Follow the steps below to use the system                                                                                                                                              "<<endl;
         cout<<"Step 1:  To get started you have to run the app in your console application                                                                                                           "<<endl;
         cout<<"Step 2:  Run the application to see the welcome page                                                                                                                                   "<<endl;
-        cout<<"Step 3: Type "<<"{ add }"<<" To add a new location then enter the name of the location                                                                                                 "<<endl;
-        cout<<"Step 4: Type "<<"{ delete }"<<" To delete an existing location then enter the name of the location you want to delete                                                                   "<<endl;
-        cout<<"Step 5: Type "<<"{ record }"<<" To record a disease and it cases where you will enter the name of the disease and number of cases in a given location name"<<endl;
-        cout<<"Step 6: Type "<<"{ list }"<<"  To List all existing locations                                                                                                                            "<<endl;
-        cout<<"Step 7: Type "<<"{ where }"<<"  To List existing Diseases in a locations                                                                                                                 "<<endl;
-        cout<<"Step 8: Type "<<"{ wheresecond }"<<"  To Find where disease exists                                                                                                                       "<<endl;
-        cout<<"Step 9: Type "<<"{ cases }"<<"  To Find cases of a disease in location                                                                                                                   "<<endl;
-        cout<<"Step 10: Type "<<"{ total }"<<" To Find total cases of a given disease                                                                                                                    "<<endl;
+        cout<<"Step 3: Type "<<"{ add + name of the lcoation }"<<" To add a new location then enter the name of the location                                                                                                 "<<endl;
+        cout<<"Step 4: Type "<<"{ delete + name of the location  }"<<" To delete an existing location then enter the name of the location you want to delete                                                                   "<<endl;
+        cout<<"Step 5: Type "<<"{ record + (location name,disease name and number of case) }"<<" To record a disease and it cases where you will enter the name of the disease and number of cases in a given location name"<<endl;
+        cout<<"Step 6: Type "<<"{ list locations }"<<"  To List all existing locations                                                                                                                            "<<endl;
+        cout<<"Step 7: Type "<<"{ list diseases }"<<"  To List existing Diseases in a locations                                                                                                                 "<<endl;
+        cout<<"Step 8: Type "<<"{ where + (name of the disease)"<<"  To Find where disease exists                                                                                                                       "<<endl;
+        cout<<"Step 9: Type "<<"{ cases + (location name + disease name) } }"<<"  To Find cases of a disease in location                                                                                                                   "<<endl;
+        cout<<"Step 10: Type "<<"{ cases + (disease name) }"<<" To Find total cases of a given disease                                                                                                                    "<<endl;
         cout<<"Step 11: Type "<<"{ help }"<<" To Print user manual                                                                                                                                       "<<endl;
         cout<<"Step 12: Type "<<"{ Exit }"<<" To Exit the application                                                                                                                                    "<<endl;
 
