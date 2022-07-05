@@ -159,6 +159,7 @@ public:
         }
         return lastId;
     }
+
     static int returnLastIdFromDiseaseFile(){
         vector<Disease> all = returnAllDiseases();
         int lastId = 0;
@@ -169,6 +170,7 @@ public:
         }
         return lastId;
     }
+    // add a new location to the file
     static void AddLocation(Location location) {
         ofstream file;
         file.open("locations.txt", ios::app);
@@ -316,6 +318,7 @@ public:
         }
         return location;
     }
+    // add a new disease to the file
     static void recordAdiseaseAndItsCase(Disease disease){
         ofstream file;
         file.open("diseases.txt", ios::app);
@@ -411,6 +414,7 @@ public:
         return locations;
 
     }
+    // get location by disease name
         static void getLocationByDiseaseName(string diseaseName){
         cout<<"\t\t "<<diseaseName<<" is spread in "<<endl;
 
@@ -523,6 +527,7 @@ public:
         }
         return allDiseases;
     }
+    // total cases of a given disease
     static void totalNumberOfCaseOfAgivenDisease(string diseaseName){
         for_each(diseaseName.begin(), diseaseName.end(), [](char &c){
             c = toupper(c);
