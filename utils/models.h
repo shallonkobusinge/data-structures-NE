@@ -8,6 +8,7 @@ private:
     int id;
     string name;
 public:
+    Location(){}
     Location(int id, string name){
         this->id = id;
         this->name = name;
@@ -17,6 +18,12 @@ public:
     }
     string getName(){
         return this->name;
+    }
+    void setId(int id){
+        this->id = id;
+    }
+    void setName(string name){
+        this->name = name;
     }
 };
 
@@ -44,5 +51,17 @@ public:
     }
     int getNumberOfCases(){
         return numberOfCases;
+    }
+    void setId(int id){
+        this->id = id;
+    }
+    void setName(string name){
+        this->name = name;
+    }
+    void setLocationId(int id){
+        this->locationId = id;
+    }
+    void setNumberOfCases(int caseNumber){
+        this->numberOfCases = caseNumber;
     }
 };
