@@ -5,6 +5,13 @@
 class MinistryService{
 
 public:
+    static bool compare(string a, string b){
+        //returns 1 if string a is alphabetically
+        //less than string b
+        //quite similar to strcmp operation
+        return a<b;
+    }
+
     static vector<Location> returnAllLocations(){
         vector<Location> locations;
         ifstream file;
@@ -19,6 +26,60 @@ public:
         }
         file.close();
         return locations;
+    }
+    static vector<string> returnAllLocationNames(){
+        vector<string> locationNames;
+        ifstream file;
+        file.open("locations.txt", ios::app);
+        string line;
+        string storedLine;
+        while(getline(file, line)){
+            stringstream ss(line);
+            string token;
+            Location location =  returnSingleLocation(line);
+            locationNames.push_back(location.getName());
+        }
+        file.close();
+        return locationNames;
+    }
+    static vector<string> returnAllDiseaseNames(){
+        vector<string> diseaseNames;
+        ifstream file;
+        file.open("diseases.txt", ios::app);
+        string line;
+        string storedLine;
+        while(getline(file, line)){
+            stringstream ss(line);
+            string token;
+            Disease disease =  returnSingleDisease(line);
+            diseaseNames.push_back(disease.getName());
+        }
+        file.close();
+        return diseaseNames;
+    }
+    static void alphabeticallySortLocations(){
+        vector<string> locations = returnAllLocationNames();
+        std::sort(locations.begin(), locations.end(), compare);
+        cout<<endl<<endl;
+        cout<<"  \t\t\t LIST OF ALL EXISTING LOCATIONS  \t\t\t"<<endl;
+       for(int i=0; i<locations.size(); i++) {
+           cout << "\t\t " << i + 1 << " \t\t " << locations[i] << endl;
+           cout << endl << endl;
+       }
+    }
+    static void alphabeticallySortDiseases(){
+        vector<string> diseases = returnAllDiseaseNames();
+        std::sort(diseases.begin(), diseases.end(), compare);
+        cout<<endl<<endl;
+        cout<<"  \t\t\t LIST OF ALL EXISTING DISEASES  \t\t\t"<<endl;
+        cout<<"\t\t  NAMES"<<endl;
+        cout<<"----------------------------------------------"<<endl;
+        for(auto & disease : diseases) {
+//            Disease disease = returnSingleDisease(diseases[i]);
+//            Location location = findLocationById(disease.getLocationId());
+            cout << " \t\t " << disease << endl;
+        }
+        cout<<endl<<endl;
     }
     static vector<Disease> returnAllDiseases(){
         vector<Disease> diseases;
@@ -121,7 +182,7 @@ public:
         cout<<endl<<endl;
         cout<<"  \t\t\t LIST OF LOCATIONS WE HAVE "<<endl;
         for(int i = 0; i < locations.size(); i++){
-            cout<<" \t\t\t Location "<<i<<" "<<locations[i].getName()<<endl;
+            cout<<" \t\t\t Location "<<i+1<<" "<<locations[i].getName()<<endl;
         }
         string name;
         cout << "     ENTER LOCATION NAME TO DELETE" << endl;
@@ -152,6 +213,10 @@ public:
         tempFile.close();
         remove("locations.txt");
         rename("temp.txt", "locations.txt");
+        cout<<endl;
+        cout<<" "<<name<<" deleted successfully"<<endl;
+        cout<<endl;
+        cout<<endl;
     }
     static bool checkIfAlocationExistsById(int id){
         bool exists = false;
@@ -249,6 +314,41 @@ public:
         }
         return disease;
     }
+//    static vector<Location> findLocationByDiseaseLocationId(string name){
+//        vector<Location> locations = returnAllLocations();
+//        vector<Location> locationsByDiseaseName;
+//        for(auto & i : locations){
+//            if(i.getName() == name){
+//                locationsByDiseaseName.push_back(i);
+//            }
+//        }
+//        return locationsByDiseaseName;
+//    }
+      static vector<Location> findAListOfLocationGivenDiseaseName(string name) {
+        vector<Location> locations = returnAllLocations();
+        vector<Disease> diseases = returnAllDiseases();
+        vector<Location> locationsByDiseaseName;
+        for (int i = 0; i < diseases.size(); i++) {
+            if (diseases[i].getName() == name) {
+                for (int j = 0; j < locations.size(); j++) {
+                    if (locations[j].getId() == diseases[i].getLocationId()) {
+                        locationsByDiseaseName.push_back(locations[j]);
+                    }
+                }
+            }
+
+        }
+        return locationsByDiseaseName;
+    }
+        static vector<Location> findLocationByDiseaseLocationId(string name) {
+        Disease disease = findDiseaseByName(name);
+        Location location = findLocationById(disease.getLocationId());
+        vector<Location> locations;
+        cout<<" Location found "<<location.getName()<<endl;
+        locations.push_back(location);
+        return locations;
+
+    }
    static void getLocationByDiseaseName(){
        string diseaseName;
        cout<<endl;
@@ -267,13 +367,13 @@ public:
         }
         Disease disease = findDiseaseByName(diseaseName);
         Location location = findLocationById(disease.getLocationId());
-        string name = location.getName();
 
-       for_each(name.begin(), name.end(), [](char &c){
-           c = tolower(c);
-       });
-       cout<<"\t\t\t ["<<name<<"]"<<endl;
-       cout<<"\t\t "<<diseaseName<<" is found in "<<name<<endl;
+        vector<Location> locationsByDiseaseName = findAListOfLocationGivenDiseaseName(disease.getName());
+
+        cout<<" "<<diseaseName<<" is found in ";
+        for(int i=0; i<locationsByDiseaseName.size(); i++){
+            cout<<" \t [ "<<locationsByDiseaseName[i].getName()<<"] \t\t";
+        }
        cout<<endl<<endl;
     }
     static Disease getDiseaseByLocationId(int id){

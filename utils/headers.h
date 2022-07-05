@@ -18,6 +18,8 @@
 #include <iomanip>
 #include <codecvt>
 #include "fstream"
+#include "bits/stdc++.h"
+
 
 #pragma once
 

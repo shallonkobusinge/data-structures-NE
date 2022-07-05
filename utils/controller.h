@@ -36,8 +36,10 @@ public:
         Disease disease = Disease(name,location.getId(),numberOfCases);
         MinistryService::recordAdiseaseAndItsCase(disease);
     }
+
     static void showAllLocations(){
         vector<Location> locations = MinistryService::returnAllLocations();
+
         cout<<endl<<endl;
         cout<<"  \t\t\t LIST OF ALL EXISTING LOCATIONS  \t\t\t"<<endl;
         for(auto & i : locations){
@@ -57,13 +59,22 @@ public:
         }
         cout<<endl<<endl;
     }
-
+    static unsigned get_case_string(char* str, char** _strings, unsigned n){
+        while(n)
+        {
+            n--;
+            if(strcmp(str, _strings[n]) == 0) return n;
+        }
+        return 0;
+    }
     static void start(){
-        int option;
+        string option;
+
+
         do{
 
             cout<<"======================================================================================================"<<endl;
-            cout<<"*                        HELP MENU                                                  *"<<endl;
+            cout<<"*                                         HELP MENU                                                  *"<<endl;
             cout<<"======================================================================================================"<<endl;
             cout<<"1. add <Location>                                    : Add a new location                             "<<endl;
             cout<<"2. delete <Location>                                 : Delete an existing location                    "<<endl;
@@ -76,46 +87,33 @@ public:
             cout<<"9. help (click 9 for help)                           : Prints user manual                             "<<endl;
             cout<<"10. Exit                                             : Exit the program                               "<<endl;
             cin>>option;
-            switch (option) {
-                case 1:
-                    addLocation();
-                    break;
-                case 2:
-                    MinistryService::deleteAnExistingLocation();
-                    break;
-                case 3:
-                    addDisease();
-                    break;
-                case 4:
-                    showAllLocations();
-                    break;
-                case 5:
-                    showAllDisease();
-                    break;
-                case 6:
-                    MinistryService::getLocationByDiseaseName();
-                    break;
-                case 7:
-                    MinistryService::numberOfCasesFoundInALocation();
-                    break;
-                case 8:
-                    MinistryService::totalNumberOfCaseOfAgivenDisease();
-                    break;
-                case 9:
-                    MinistryService::userManual();
-                    break;
-                case 10:
-                    cout<<"\t\t Ministry of Health (MoH) management system has terminated successfully "<<endl;
+            if(option == "add"){
+                addLocation();
+            } else if(option == "delete"){
+                MinistryService::deleteAnExistingLocation();
+            }else if(option == "record") {
+                addDisease();
+            }else if(option == "list"){
+                MinistryService::alphabeticallySortLocations();
+            }else if(option == "where"){
+                MinistryService::alphabeticallySortDiseases();
+            }else if(option == "wheresecond"){
+                MinistryService::getLocationByDiseaseName();
+            }else if(option == "cases"){
+                MinistryService::numberOfCasesFoundInALocation();
+            }else if(option == "total"){
+                MinistryService::totalNumberOfCaseOfAgivenDisease();
+            }else if(option == "help"){
+                MinistryService::userManual();
+            }else if(option == "exit"){
+                cout<<"\t\t Ministry of Health (MoH) management system has terminated successfully "<<endl;
                     exit(1);
-                default:
-                    cout<<endl;
-                    cout<<endl;
-                    cout<<" \t\t\t INVALID INPUT "<<endl;
-                    cout<<endl;
-                    break;
-                                }
-
-        }while(option != 10);
+            }else{
+            cout << endl;
+            cout << endl;
+            cout << " \t\t\t INVALID INPUT " << endl;
+            cout << endl;
+        }}while(option != "exit");
 
     }
 };

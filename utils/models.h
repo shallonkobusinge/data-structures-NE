@@ -3,7 +3,7 @@
 //
 
 #include "headers.h"
-class Location{
+class Location {
 private:
     int id;
     string name;
@@ -30,7 +30,7 @@ public:
     }
 };
 
-class Disease{
+class Disease  {
 private:
     int id;
     string name;
