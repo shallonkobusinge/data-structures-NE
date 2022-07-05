@@ -9,6 +9,9 @@ private:
     string name;
 public:
     Location(){}
+    Location(string name){
+        this->name = name;
+    }
     Location(int id, string name){
         this->id = id;
         this->name = name;
@@ -34,8 +37,14 @@ private:
     int locationId;
     int numberOfCases;
 public:
+    Disease(){}
     Disease(int id, string name, int locationId, int numberOfCases){
         this->id = id;
+        this->name = name;
+        this->locationId = locationId;
+        this->numberOfCases = numberOfCases;
+    }
+    Disease(string name, int locationId, int numberOfCases){
         this->name = name;
         this->locationId = locationId;
         this->numberOfCases = numberOfCases;

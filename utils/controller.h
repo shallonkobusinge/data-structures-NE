@@ -6,6 +6,32 @@
 class App{
 public:
 
+    static void addLocation(){
+        string name;
+        cout << "Enter location name: "<<endl;
+        cin >> name;
+        for_each(name.begin(), name.end(), [](char &c){
+            c = toupper(c);
+        });
+        Location location = Location(name);
+        MinistryService::AddLocation(location);
+    }
+    static void addDisease(){
+        string name;
+        cout << "Enter disease name: "<<endl;
+        cin >> name;
+        for_each(name.begin(), name.end(), [](char &c){
+            c = toupper(c);
+        });
+        int locationId;
+        cout << "Enter location id: "<<endl;
+        cin >> locationId;
+        int numberOfCases;
+        cout << "Enter number of cases: "<<endl;
+        cin >> numberOfCases;
+        Disease disease = Disease(name,locationId,numberOfCases);
+        MinistryService::recordAdiseaseAndItsCase(disease);
+    }
     static void header(){
         cout<<"======================================================================================================"<<endl;
         cout<<"*       Welcome to Disease Cases Reporting System!                                                   *"<<endl;
@@ -39,13 +65,13 @@ public:
             cin>>option;
             switch (option) {
                 case '1':
-                    cout<<" Add location "<<endl;
+                    addLocation();
                     break;
                 case '2':
-                    cout<<" delete location "<<endl;
+                    MinistryService::deleteAnExistingLocation();
                     break;
                 case '3':
-                    cout<<" Add location "<<endl;
+                    addDisease();
                     break;
                 case '4':
                     cout<<" Add location "<<endl;
