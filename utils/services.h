@@ -480,7 +480,7 @@ public:
         cout<<"Step 2:  Run the application to see the welcome page                                                                                                                                   "<<endl;
         cout<<"Step 3: Type "<<"{ add }"<<" To add a new location then enter the name of the location                                                                                                 "<<endl;
         cout<<"Step 4: Type "<<"{ delete }"<<" To delete an existing location then enter the name of the location you want to delete                                                                   "<<endl;
-        cout<<"Step 5: Type "<<"{ record }"<<" To record a disease and it cases where you will enter the name of the disease and number of cases in a given location name                               "<<endl;
+        cout<<"Step 5: Type "<<"{ record }"<<" To record a disease and it cases where you will enter the name of the disease and number of cases in a given location name"<<endl;
         cout<<"Step 6: Type "<<"{ list }"<<"  To List all existing locations                                                                                                                            "<<endl;
         cout<<"Step 7: Type "<<"{ where }"<<"  To List existing Diseases in a locations                                                                                                                 "<<endl;
         cout<<"Step 8: Type "<<"{ wheresecond }"<<"  To Find where disease exists                                                                                                                       "<<endl;
