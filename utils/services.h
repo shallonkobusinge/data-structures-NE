@@ -13,6 +13,10 @@ public:
         vector<Location> locations;
         ifstream file;
         file.open("locations.txt", ios::app);
+        if(!file.is_open()){
+            cout<<"File not found"<<endl;
+            exit(1);
+        }
         string line;
         string storedLine;
         while(getline(file, line)){
@@ -28,6 +32,10 @@ public:
         vector<string> locationNames;
         ifstream file;
         file.open("locations.txt", ios::app);
+        if(!file.is_open()){
+            cout<<"File not found"<<endl;
+            exit(1);
+        }
         string line;
         string storedLine;
         while(getline(file, line)){
@@ -43,6 +51,10 @@ public:
         vector<string> diseaseNames;
         ifstream file;
         file.open("diseases.txt", ios::app);
+        if(!file.is_open()){
+            cout<<"File not found"<<endl;
+            exit(1);
+        }
         string line;
         string storedLine;
         while(getline(file, line)){
@@ -58,6 +70,10 @@ public:
         vector<string> diseaseNames;
         ifstream file;
         file.open("locations.txt", ios::app);
+        if(!file.is_open()){
+            cout<<"File not found"<<endl;
+            exit(1);
+        }
         string line;
         string storedLine;
         while(getline(file, line)){
@@ -118,6 +134,10 @@ public:
         vector<Disease> diseases;
         ifstream file;
         file.open("diseases.txt", ios::app);
+        if(!file.is_open()){
+            cout<<"File not found"<<endl;
+            exit(1);
+        }
         string line;
         string storedLine;
         while(getline(file, line)){
@@ -152,20 +172,32 @@ public:
     static void AddLocation(Location location) {
         ofstream file;
         file.open("locations.txt", ios::app);
-        bool locationExists = locationExistsByName(location.getName());
-        if (locationExists) {
+        if(!file.is_open()){
+            cout<<"File not found"<<endl;
+            exit(1);
+        }
+        if(file.is_open()){
+            bool locationExists = locationExistsByName(location.getName());
+            if (locationExists) {
+                cout<<endl;
+                cout << "\t\t Location already exists" << endl;
+                cout<<endl;
+                exit(0);
+            }
+            int lastId = returnLastId();
+            location.setId(lastId + 1);
+            file << location.getId() << "  " << location.getName() << "  " << endl;
             cout<<endl;
-            cout << "\t\t Location already exists" << endl;
+            cout << "\t\t\t Location "<<location.getName()<<" is successfully added!" << endl;
+            cout<<endl;
+            file.close();
+        }else{
+            cout<<endl;
+            cout << "\t\t Error: File could not be opened" << endl;
             cout<<endl;
             exit(0);
         }
-        int lastId = returnLastId();
-        location.setId(lastId + 1);
-        file << location.getId() << "  " << location.getName() << "  " << endl;
-        cout<<endl;
-        cout << "\t\t\t Location "<<location.getName()<<" is successfully added!" << endl;
-        cout<<endl;
-        file.close();
+
     }
     static bool locationExistsByName(string location){
         vector<Location> locations = returnAllLocations();
@@ -287,25 +319,38 @@ public:
     static void recordAdiseaseAndItsCase(Disease disease){
         ofstream file;
         file.open("diseases.txt", ios::app);
-        int lastId = returnLastIdFromDiseaseFile()+1;
-        bool locationExists = checkIfAlocationExistsById(disease.getLocationId());
-        if (!locationExists) {
+        if(!file.is_open()){
+            cout<<"File not found"<<endl;
+            exit(1);
+        }
+
+        if(file.is_open()){
+            int lastId = returnLastIdFromDiseaseFile()+1;
+            bool locationExists = checkIfAlocationExistsById(disease.getLocationId());
+            if (!locationExists) {
+                cout<<endl;
+                cout << "\t\t Location you are trying to add does not exist" << endl;
+                cout<<endl;
+                exit(0);
+            }
+            if(disease.getNumberOfCases() <= 0){
+                cout<<endl;
+                cout << "\t Number of cases should be greater than 0" << endl;
+                cout<<endl;
+                exit(0);
+            }
+            Location location = getLocationByName(disease.getLocationId());
+            Disease addDisease = Disease(lastId,disease.getName(), disease.getLocationId(), disease.getNumberOfCases());
+            file << addDisease.getId() << "  " << addDisease.getName() << "  " << addDisease.getLocationId() << "  " << addDisease.getNumberOfCases() << endl;
+            cout<<"\t\t "<<addDisease.getName()<<" has be added to "<<location.getName()<<" with "<<addDisease.getNumberOfCases()<<" cases successfully "<<endl;
+            file.close();
+        }else{
             cout<<endl;
-            cout << "\t\t Location you are trying to add does not exist" << endl;
+            cout << "\t\t File is not open" << endl;
             cout<<endl;
             exit(0);
         }
-        if(disease.getNumberOfCases() <= 0){
-            cout<<endl;
-            cout << "\t Number of cases should be greater than 0" << endl;
-            cout<<endl;
-            exit(0);
-        }
-        Location location = getLocationByName(disease.getLocationId());
-        Disease addDisease = Disease(lastId,disease.getName(), disease.getLocationId(), disease.getNumberOfCases());
-       file << addDisease.getId() << "  " << addDisease.getName() << "  " << addDisease.getLocationId() << "  " << addDisease.getNumberOfCases() << endl;
-        cout<<"\t\t "<<addDisease.getName()<<" has be added to "<<location.getName()<<" with "<<addDisease.getNumberOfCases()<<" cases successfully "<<endl;
-        file.close();
+
     }
     static Location findLocationById(int id){
         vector<Location> locations = returnAllLocations();
